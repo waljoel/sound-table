@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero de Sonidos para Niños</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #4a4a4a;
+            text-align: center;
+        }
+        .sound-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+        }
+        .sound-button {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .sound-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .sound-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .sound-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tablero de Sonidos Divertidos</h1>
+    <div class="sound-board" id="soundBoard"></div>
+
+    <script>
+        const sounds = [
+            { name: 'Avión', icon: '✈️', folder: 'airplane' },
+            { name: 'Lata abriéndose', icon: '🥫', folder: 'can_opening' },
+            { name: 'Reloj', icon: '🕰️', folder: 'clock_tick' },
+            { name: 'Motor', icon: '🚗', folder: 'engine' },
+            { name: 'Fuegos artificiales', icon: '🎆', folder: 'fireworks' },
+            { name: 'Vidrio rompiéndose', icon: '🏺', folder: 'glass_breaking' },
+            { name: 'Helicóptero', icon: '🚁', folder: 'helicopter' },
+            { name: 'Gallina', icon: '🐔', folder: 'hen' },
+            { name: 'Teclado', icon: '⌨️', folder: 'keyboard_typing' },
+            { name: 'Clic del ratón', icon: '🖱️', folder: 'mouse_click' },
+            { name: 'Lluvia', icon: '🌧️', folder: 'rain' },
+            { name: 'Olas del mar', icon: '🌊', folder: 'sea_waves' },
+            { name: 'Tormenta', icon: '⛈️', folder: 'thunderstorm' },
+            { name: 'Tren', icon: '🚂', folder: 'train' },
+            { name: 'Gotas de agua', icon: '💧', folder: 'water_drops' },
+            { name: 'Viento', icon: '🌬️', folder: 'wind' }
+        ];
+
+        const soundBoard = document.getElementById('soundBoard');
+        let currentAudio = null;
+
+        sounds.forEach(sound => {
+            const button = document.createElement('button');
+            button.className = 'sound-button';
+            button.innerHTML = `
+                <span class="sound-icon">${sound.icon}</span>
+                <span>${sound.name}</span>
+            `;
+            button.onclick = () => playSound(sound.folder);
+            soundBoard.appendChild(button);
+        });
+
+        function playSound(folder) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            const randomNumber = Math.floor(Math.random() * 8) + 1;
+            currentAudio = new Audio(`sounds/${folder}/${randomNumber}.wav`);
+            currentAudio.play();
+        }
+    </script>
+</body>
+</html>
